@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ByteWallet - Nova Transação</title>
+</head>
+<body>
+    <h1>Lançar Transação</h1>
+
+    <div th:if="${mensagem != null}" th:text="${mensagem}" style="color: green; font-weight: bold;"></div>
+
+    <form th:action="@{/transacoes/save}" method="POST" th:object="${transacao}">
+        
+        <!-- O type="date" envia uma String (ex: "2026-09-18"). 
+             O @DateTimeFormat na classe Transacao converte isso para Date automaticamente. -->
+        <label for="data">Data:</label>
+        <input type="date" id="data" th:field="*{data}" required />
+        <br/><br/>
+
+        <label for="descricao">Descrição (ex: Compra no mercado):</label>
+        <input type="text" id="descricao" th:field="*{descricao}" required />
+        <br/><br/>
+
+        <label for="valor">Valor (R$):</label>
+        <input type="number" step="0.01" id="valor" th:field="*{valor}" required />
+        <br/><br/>
+
+        <label for="movimento">Tipo de Movimento:</label>
+        <select id="movimento" th:field="*{movimento}">
+            <option value="D">Débito (Saída)</option>
+            <option value="C">Crédito (Entrada)</option>
+        </select>
+        <br/><br/>
+
+        <label for="conta">Conta Origem/Destino:</label>
+        <select id="conta" th:field="*{conta.id}" required>
+            <option th:each="c : ${contasItems}" th:value="${c.id}" th:text="${c.descricao + ' - ' + c.numero}"></option>
+        </select>
+        <br/><br/>
+
+        <label for="categoria">Categoria:</label>
+        <select id="categoria" th:field="*{categoria.id}" required>
+            <option th:each="cat : ${categoriasItems}" th:value="${cat.id}" th:text="${cat.nome + ' (' + cat.natureza + ')'}"></option>
+        </select>
+        <br/><br/>
+
+        <button type="submit">Registrar Transação</button>
+    </form>
+</body>
+</html>

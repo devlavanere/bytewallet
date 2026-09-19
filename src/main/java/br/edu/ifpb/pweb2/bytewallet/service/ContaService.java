@@ -17,7 +17,7 @@ public class ContaService {
         return contaRepository.save(conta);
     }
 
-    public List<Conta> listarTodos() {
+    public List<Conta> listarTodas() {
         return contaRepository.findAll();
     }
 
