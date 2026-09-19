@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ByteWallet - Cadastro de Correntista</title>
+    <!-- RNF 02: Bootstrap (adicona o css depois) -->
+</head>
+<body>
+    <h1>Cadastro de Correntista</h1>
+
+    <!-- Exibe a mensagem de sucesso que veio do Flash Attribute -->
+    <div th:if="${mensagem != null}" th:text="${mensagem}" style="color: green; font-weight: bold;"></div>
+
+    <form th:action="@{/correntistas/save}" method="POST" th:object="${correntista}">
+        
+        <label for="nome">Nome do Correntista:</label>
+        <input type="text" id="nome" th:field="*{nome}" required />
+        <br/><br/>
+
+        <button type="submit">Salvar Correntista</button>
+    </form>
+</body>
+</html>

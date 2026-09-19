@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ByteWallet - Cadastro de Conta</title>
+</head>
+<body>
+    <h1>Cadastro de Conta</h1>
+
+    <div th:if="${mensagem != null}" th:text="${mensagem}" style="color: green; font-weight: bold;"></div>
+
+    <form th:action="@{/contas/save}" method="POST" th:object="${conta}">
+        
+        <label for="numero">Número da Conta:</label>
+        <input type="text" id="numero" th:field="*{numero}" required />
+        <br/><br/>
+
+        <label for="descricao">Descrição (ex: Nubank, BB):</label>
+        <input type="text" id="descricao" th:field="*{descricao}" required />
+        <br/><br/>
+
+        <label for="tipo">Tipo:</label>
+        <select id="tipo" th:field="*{tipo}">
+            <option value="CORRENTE">Conta Corrente</option>
+            <option value="CARTAO">Cartão de Crédito</option>
+        </select>
+        <br/><br/>
+
+        <!-- Relacionamento: Vinculando a conta a um correntista -->
+        <label for="correntista">Correntista:</label>
+        <select id="correntista" th:field="*{correntista.id}">
+            <option th:each="cor : ${correntistaItems}" th:value="${cor.id}" th:text="${cor.nome}"></option>
+        </select>
+        <br/><br/>
+
+        <button type="submit">Salvar Conta</button>
+    </form>
+</body>
+</html>

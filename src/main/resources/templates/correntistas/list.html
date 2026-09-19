@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ByteWallet - Correntistas Cadastrados</title>
+</head>
+<body>
+    <h1>Correntistas Cadastrados</h1>
+
+    <a th:href="@{/correntistas/form}"><button>Novo Correntista</button></a>
+    <br/><br/>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- O th:each faz um loop na lista enviada pelo Controller -->
+            <tr th:each="correntista : ${correntistas}">
+                <td th:text="${correntista.id}"></td>
+                <td th:text="${correntista.nome}"></td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
