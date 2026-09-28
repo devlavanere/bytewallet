@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ByteWallet - Lista de Transações</title>
+</head>
+<body>
+    <h1>Extrato de Transações</h1>
+
+    <!-- Mensagem de sucesso (PRG) -->
+    <div th:if="${mensagem != null}" th:text="${mensagem}" style="color: green; font-weight: bold;"></div>
+
+    <a th:href="@{/transacoes/form}"><button>Nova Transação</button></a>
+    <br/><br/>
+
+    <table border="1">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Data</th>
+                <th>Descrição</th>
+                <th>Valor (R$)</th>
+                <th>Comentários</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="t : ${transacoes}">
+                <td th:text="${t.id}"></td>
+                
+                <!-- Formata a data direto no Thymeleaf -->
+                <td th:text="${#dates.format(t.data, 'dd/MM/yyyy')}"></td>
+                
+                <td th:text="${t.descricao}"></td>
+                <td th:text="${t.valor}"></td>
+                
+                <!-- Coluna para exibir os comentários vinculados -->
+                <td>
+                    <ul>
+                        <li th:each="com : ${t.comentarios}">
+                            <span th:text="${com.texto}"></span>
+                            <!-- UC06: Excluir Comentário -->
+                            <a th:href="@{/comentarios/excluir/{id}(id=${com.id})}" style="color: red; font-size: 12px; text-decoration: none;">[X]</a>
+                        </li>
+                    </ul>
+                </td>
+
+                <!-- Coluna de Ações da Transação -->
+                <td>
+                    <!-- UC04: Editar Transação -->
+                    <a th:href="@{/transacoes/editar/{id}(id=${t.id})}"><button>Editar</button></a>
+                    
+                    <!-- UC05: Adicionar Comentário -->
+                    <a th:href="@{/comentarios/form/{id}(id=${t.id})}"><button>Comentar</button></a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>

@@ -18,4 +18,8 @@ public class TransacaoService {
     public List<Transacao> listarTodas() {
         return transacaoRepository.findAll();
     }
+
+    public Transacao buscarPorId(Long id) {
+        return transacaoRepository.findById(id).orElse(null);
+    }
 }

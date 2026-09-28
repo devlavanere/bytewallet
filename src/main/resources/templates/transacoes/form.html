@@ -10,6 +10,7 @@
     <div th:if="${mensagem != null}" th:text="${mensagem}" style="color: green; font-weight: bold;"></div>
 
     <form th:action="@{/transacoes/save}" method="POST" th:object="${transacao}">
+        <input type="hidden" th:field="*{id}" />
         
         <!-- O type="date" envia uma String (ex: "2026-09-18"). 
              O @DateTimeFormat na classe Transacao converte isso para Date automaticamente. -->

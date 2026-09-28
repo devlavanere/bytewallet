@@ -5,6 +5,7 @@ import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Data
 @Entity
@@ -31,4 +32,6 @@ public class Transacao {
     @JoinColumn(name = "conta_id")
     private Conta conta;
 
+    @OneToMany(mappedBy = "transacao")
+    private List<Comentario> comentarios;
 }

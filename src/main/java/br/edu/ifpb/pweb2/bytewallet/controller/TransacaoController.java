@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -50,6 +51,21 @@ public class TransacaoController {
         transacaoService.salvar(transacao);
         attr.addFlashAttribute("mensagem", "Transação registrada com sucesso!");
         modelAndView.setViewName("redirect:/transacoes/form");
+        return modelAndView;
+    }
+
+    @GetMapping("/list")
+    public ModelAndView listar(ModelAndView modelAndView) {
+        modelAndView.setViewName("transacoes/list");
+        modelAndView.addObject("transacoes", transacaoService.listarTodas());
+        return modelAndView;
+    }
+
+    @GetMapping("/editar/{id}")
+    public ModelAndView editar(@PathVariable("id") Long id, ModelAndView modelAndView) {
+        modelAndView.setViewName("transacoes/form");
+        // Busca a transação no banco e manda para a tela já preenchida
+        modelAndView.addObject("transacao", transacaoService.buscarPorId(id));
         return modelAndView;
     }
 }

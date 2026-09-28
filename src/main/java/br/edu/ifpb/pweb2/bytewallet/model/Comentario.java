@@ -13,7 +13,7 @@ public class Comentario {
     
     private String texto;
     
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "transacao_id")
     private Transacao transacao;
 }

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>ByteWallet - Comentário</title>
+</head>
+<body>
+    <h1>Adicionar Comentário à Transação</h1>
+
+    <form th:action="@{/comentarios/save}" method="POST" th:object="${comentario}">
+        
+        <!-- Mantém o ID do comentário (se for edição) -->
+        <input type="hidden" th:field="*{id}" />
+        
+        <!-- Mantém o ID da transação vinculada -->
+        <input type="hidden" th:field="*{transacao.id}" />
+
+        <label for="texto">Escreva seu comentário:</label><br/>
+        <textarea id="texto" th:field="*{texto}" rows="4" cols="50" required></textarea>
+        <br/><br/>
+
+        <button type="submit">Salvar Comentário</button>
+    </form>
+    <br/>
+    <a th:href="@{/transacoes/list}"><button>Voltar para Lista</button></a>
+</body>
+</html>
