@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ByteWallet - Início</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light d-flex align-items-center" style="height: 100vh;">
+
+    <div class="container text-center">
+        <h1 class="display-4 fw-bold text-primary mb-3">ByteWallet</h1>
+        <p class="lead text-muted mb-5">Selecione o seu perfil de acesso para continuar</p>
+
+        <div class="row justify-content-center">
+            <!-- Botão Administrador -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm border-0 h-100 p-4">
+                    <h3 class="h4">Acesso Administrativo</h3>
+                    <p class="text-muted small">Gerencie correntistas e configurações de categorias.</p>
+                    <a th:href="@{/correntistas/list}" class="btn btn-dark w-100 mt-auto">Entrar como Admin</a>
+                </div>
+            </div>
+
+            <!-- Botão Cliente -->
+            <div class="col-md-4 mb-4">
+                <div class="card shadow-sm border-0 h-100 p-4">
+                    <h3 class="h4">Área do Correntista</h3>
+                    <p class="text-muted small">Acesse suas contas, extratos e lançamentos.</p>
+                    <a th:href="@{/transacoes/list}" class="btn btn-primary w-100 mt-auto">Entrar como Cliente</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

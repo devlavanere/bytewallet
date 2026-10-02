@@ -10,6 +10,22 @@
 </head>
 <body class="bg-light">
 
+    <!-- Barra de Navegação Superior -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary mb-4 shadow-sm">
+        <div class="container">
+            <a class="navbar-brand fw-bold" th:href="@{/}">ByteWallet</a>
+            <div class="collapse navbar-collapse">
+                <ul class="navbar-nav me-auto">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/transacoes/list}">Meu Extrato</a></li>
+                    <li class="nav-item"><a class="nav-link" th:href="@{/contas/form}">Nova Conta</a></li>
+                </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" th:href="@{/}">Sair</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <!-- Container centraliza o conteúdo e dá margem -->
     <div class="container mt-5">
         
