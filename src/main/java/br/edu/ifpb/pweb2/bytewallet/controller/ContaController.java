@@ -2,6 +2,7 @@ package br.edu.ifpb.pweb2.bytewallet.controller;
 
 import br.edu.ifpb.pweb2.bytewallet.model.Conta;
 import br.edu.ifpb.pweb2.bytewallet.model.Correntista;
+import br.edu.ifpb.pweb2.bytewallet.repository.ContaRepository;
 import br.edu.ifpb.pweb2.bytewallet.service.ContaService;
 import br.edu.ifpb.pweb2.bytewallet.service.CorrentistaService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +26,9 @@ public class ContaController {
     @Autowired
     private CorrentistaService correntistaService; // Injetado para buscar a lista do <select>
 
+    @Autowired
+    private ContaRepository contaRepository;
+
     // Esse método disponibiliza a lista de correntistas para os templates HTML desse controller
     @ModelAttribute("correntistaItems")
     public List<Correntista> getCorrentistas() {
@@ -45,6 +49,13 @@ public class ContaController {
         attr.addFlashAttribute("mensagem", "Conta cadastrada com sucesso!");
         modelAndView.setViewName("redirect:/contas/form");
         return modelAndView;
+    }
+
+    @GetMapping("/list")
+    public ModelAndView listar() {
+        ModelAndView mav = new ModelAndView("contas/list");
+        mav.addObject("contas", contaRepository.findAll());
+        return mav;
     }
 
 }
