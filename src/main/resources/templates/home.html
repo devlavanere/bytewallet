@@ -22,12 +22,21 @@
                 </div>
             </div>
 
-            <!-- Botão Cliente -->
+           <!-- Botão Cliente -->
             <div class="col-md-4 mb-4">
                 <div class="card shadow-sm border-0 h-100 p-4">
                     <h3 class="h4">Área do Correntista</h3>
                     <p class="text-muted small">Acesse suas contas, extratos e lançamentos.</p>
-                    <a th:href="@{/transacoes/list}" class="btn btn-primary w-100 mt-auto">Entrar como Cliente</a>
+                    
+                    <!-- Novo Form de Falso Login -->
+                    <form th:action="@{/login-cliente}" method="POST" class="mt-auto">
+                        <select name="correntistaId" class="form-select mb-3" required>
+                            <option value="">Selecione quem você é...</option>
+                            <option th:each="c : ${correntistas}" th:value="${c.id}" th:text="${c.nome}"></option>
+                        </select>
+                        <button type="submit" class="btn btn-primary w-100">Entrar como Cliente</button>
+                    </form>
+
                 </div>
             </div>
         </div>
