@@ -57,10 +57,12 @@
                             </div>
 
                             <div class="mb-4">
-                                <label for="correntista" class="form-label fw-bold">Vincular ao Correntista:</label>
-                                <select id="correntista" th:field="*{correntista.id}" class="form-select">
-                                    <option th:each="cor : ${correntistaItems}" th:value="${cor.id}" th:text="${cor.nome}"></option>
-                                </select>
+                            
+                            <div class="mb-4">
+                                <label class="form-label fw-bold">Correntista Titular:</label>
+                                <!-- Pega o nome direto da sessão -->
+                                <input type="text" class="form-control text-muted bg-light" 
+                                    th:value="${session.correntistaLogado.nome}" readonly />
                             </div>
 
                             <div class="d-grid">

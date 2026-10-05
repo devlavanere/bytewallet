@@ -37,20 +37,31 @@ public class ContaController {
         return correntistaService.listarTodos();
     }
 
-    // Método para abrir a tela
     @GetMapping("/form")
-    public ModelAndView getForm(ModelAndView modelAndView) {
-        modelAndView.setViewName("contas/form");
-        modelAndView.addObject("conta", new Conta());
-        return modelAndView;
+    public ModelAndView getForm(HttpSession session) {
+        // Se alguém tentar acessar a URL direto sem estar logado, expulsa para a Home
+        if (session.getAttribute("correntistaLogado") == null) {
+            return new ModelAndView("redirect:/");
+        }
+
+        ModelAndView mav = new ModelAndView("contas/form");
+        mav.addObject("conta", new Conta());
+        return mav;
     }
 
     @PostMapping("/save")
-    public ModelAndView salvar(Conta conta, ModelAndView modelAndView, RedirectAttributes attr) {
+    public ModelAndView salvar(Conta conta, HttpSession session, RedirectAttributes attr) {
+        // Pega quem é o usuário logado na sessão atual
+        Correntista logado = (Correntista) session.getAttribute("correntistaLogado");
+        
+        if (logado != null) {
+            // TRAVA DE SEGURANÇA: Obriga a conta a pertencer a quem está logado
+            conta.setCorrentista(logado);
+        }
+
         contaService.salvar(conta);
         attr.addFlashAttribute("mensagem", "Conta cadastrada com sucesso!");
-        modelAndView.setViewName("redirect:/contas/list"); 
-        return modelAndView;
+        return new ModelAndView("redirect:/contas/list");
     }
 
     @GetMapping("/list")
@@ -66,7 +77,6 @@ public class ContaController {
             return mav;
         }
 
-        // Se logou, busca SÓ as contas dele usando a nossa nova "mágica" do repositório
         mav.setViewName("contas/list");
         mav.addObject("contas", contaRepository.findByCorrentistaId(logado.getId()));
         
