@@ -2,8 +2,11 @@ package br.edu.ifpb.pweb2.bytewallet.controller;
 
 import br.edu.ifpb.pweb2.bytewallet.model.Correntista;
 import br.edu.ifpb.pweb2.bytewallet.service.CorrentistaService;
+import jakarta.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,17 +28,20 @@ public class CorrentistaController {
         return modelAndView;
     }
 
-    // Rota POST para salvar (Aplica o PRG e Atributo Flash)
-    @PostMapping("/save")
-    public ModelAndView salvar(Correntista correntista, ModelAndView modelAndView, RedirectAttributes attr) {
-        correntistaService.salvar(correntista);
+   @PostMapping("/save")
+    public ModelAndView salvar(@Valid Correntista correntista, BindingResult result, RedirectAttributes attr) {
         
-        // Atributo de Flash sobrevive ao redirecionamento
+        // Se o Spring encontrar algum erro nas anotações da Entidade...
+        if (result.hasErrors()) {
+            // Ele aborta o salvamento e devolve a tela de formulário com os erros!
+            ModelAndView mav = new ModelAndView("correntistas/form");
+            mav.addObject("correntista", correntista); // Mantém os dados que o usuário já digitou
+            return mav;
+        }
+
+        correntistaService.salvar(correntista);;
         attr.addFlashAttribute("mensagem", "Correntista cadastrado com sucesso!");
-        
-        // Redireciona para o formulário limpo ou para a listagem (Padrão PRG)
-        modelAndView.setViewName("redirect:/correntistas/list");
-        return modelAndView;
+        return new ModelAndView("redirect:/correntistas/list");
     }
 
     // Rota GET para listar todos os correntistas
